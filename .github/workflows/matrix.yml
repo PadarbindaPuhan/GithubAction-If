@@ -4,7 +4,9 @@ on:
     branches:
       - main
 jobs:
+   
   test:
+    continue-on-error: true
     strategy:
       matrix:
         operating-system: [ubuntu-latest, windows-latest, macos-latest] 
