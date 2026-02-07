@@ -7,8 +7,14 @@ on:
         required: true
         type: string
         default: 'dist'
+    outputs:
+      deploy-status:
+        description: 'Status of deployment'
+        value: ${{ jobs.deploy.outputs.deploy-status }}
 jobs:
   deploy:
+     outputs:
+        deploy-status: ${{ steps.get-deploy-status.outputs.deploy-status }}
      runs-on: ubuntu-latest
      steps:
       - name: Get build artifacts
@@ -19,3 +25,6 @@ jobs:
         run: ls
       - name: Deploy
         run: echo "called from main work flow ...Deploying..."
+      - name: Set deploy status
+        id: get-deploy-status
+        run: echo "deploy-status=success" >> $GITHUB_OUTPUT
